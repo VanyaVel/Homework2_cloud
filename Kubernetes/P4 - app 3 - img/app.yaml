@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+spec:
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: myapp
+          image: vanyavel/hw2_todo
+          env:
+            - name: PGHOST 
+              value: "db.default.svc.cluster.local"
+            - name: PGPORT 
+              value: '5432'
+            - name: PGUSER
+              value: "postgres"
+            - name: PGPASSWORD
+              value: "postgres"
+            - name: PGDATABASE
+              value: "postgres"
+          resources:
+            limits:
+              memory: "128Mi" 
+              cpu: "500m"
+          ports:
+            - containerPort: 3000
